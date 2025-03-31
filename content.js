@@ -2,14 +2,12 @@
 function checkAndSeekVideo() {
   const progressBar = document.querySelector('.ytp-play-progress.ytp-swatch-background-color');
 
-  if (progressBar && getComputedStyle(progressBar).backgroundColor === 'rgb(255, 204, 0)') {
-    const player = document.getElementById('player');
-    if (player) {
-      const video = player.querySelector('video');
-      if (video) {
-        video.currentTime = video.duration;
-      }
-    }
+  if (progressBar) {
+    const color = getComputedStyle(progressBar).backgroundColor
+    if(!(color === 'rgb(255, 204, 0)' || color === '#fc0')) return
+    const videos = Array.from(document.querySelectorAll('video'))
+      .filter(video => !isNaN(video.duration) && video.duration > 0);
+    videos.map(video => video.currentTime = video.duration)
   }
 }
 
